@@ -2,6 +2,7 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const cors = require('cors');
 const http = require('http');
+const connection = require('./config/db/db..config');
 
 const app = express();
 
@@ -22,4 +23,4 @@ const port = process.env.PORT || 5000;
 
 server.listen(port, () => {
     console.log('Server is on the port:' + port);
-})
+});
