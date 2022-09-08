@@ -4,7 +4,8 @@ const cors = require('cors');
 const http = require('http');
 const connection = require('./config/db/db..config');
 
-const registerRoute = require('./api/auth/register');
+const registerRoute = require('./api/auth/register.route');
+const loginRoute = require('./api/auth/login.route');
 
 const app = express();
 
@@ -17,6 +18,7 @@ app.use(cors({
 
 
 registerRoute(app);
+loginRoute(app);
 
 const server = http.createServer(app);
 
