@@ -4,6 +4,8 @@ const cors = require('cors');
 const http = require('http');
 const connection = require('./config/db/db..config');
 
+const registerRoute = require('./api/auth/register');
+
 const app = express();
 
 app.use(bodyParser.urlencoded({extended: true}));
@@ -12,6 +14,9 @@ app.use(cors({
     origin: '*',
     methods: ['GET', 'POST', 'PUT']
 }));
+
+
+registerRoute(app);
 
 const server = http.createServer(app);
 
