@@ -7,6 +7,7 @@ const connection = require('./config/db/db.config');
 const registerRoute = require('./api/auth/register.route');
 const loginRoute = require('./api/auth/login.route');
 const logoutRoute = require('./api/auth/logout.route');
+const loadUserRoute = require('./api/auth/load.user.route');
 
 const app = express();
 
@@ -21,6 +22,7 @@ app.use(cors({
 registerRoute(app);
 loginRoute(app);
 logoutRoute(app);
+loadUserRoute(app);
 
 const server = http.createServer(app);
 
