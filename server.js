@@ -11,6 +11,7 @@ const loadUserRoute = require('./api/auth/load.user.route');
 const createTodoRoute = require('./api/tasks/create.task');
 const createProjectRoute = require('./api/tasks/create.project');
 const makeTodoDone = require('./api/tasks/make.todo.done');
+const makeProjectCompleted = require('./api/tasks/make.project-completed');
 
 const app = express();
 
@@ -29,6 +30,7 @@ loadUserRoute(app);
 createTodoRoute(app);
 createProjectRoute(app);
 makeTodoDone(app);
+makeProjectCompleted(app);
 
 const server = http.createServer(app);
 
