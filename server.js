@@ -8,6 +8,8 @@ const registerRoute = require('./api/auth/register.route');
 const loginRoute = require('./api/auth/login.route');
 const logoutRoute = require('./api/auth/logout.route');
 const loadUserRoute = require('./api/auth/load.user.route');
+const createTodoRoute = require('./api/tasks/create.task');
+const createProjectRoute = require('./api/tasks/create.project');
 
 const app = express();
 
@@ -23,6 +25,8 @@ registerRoute(app);
 loginRoute(app);
 logoutRoute(app);
 loadUserRoute(app);
+createTodoRoute(app);
+createProjectRoute(app);
 
 const server = http.createServer(app);
 
