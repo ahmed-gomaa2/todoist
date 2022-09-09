@@ -10,6 +10,7 @@ const logoutRoute = require('./api/auth/logout.route');
 const loadUserRoute = require('./api/auth/load.user.route');
 const createTodoRoute = require('./api/tasks/create.task');
 const createProjectRoute = require('./api/tasks/create.project');
+const makeTodoDone = require('./api/tasks/make.todo.done');
 
 const app = express();
 
@@ -27,6 +28,7 @@ logoutRoute(app);
 loadUserRoute(app);
 createTodoRoute(app);
 createProjectRoute(app);
+makeTodoDone(app);
 
 const server = http.createServer(app);
 
