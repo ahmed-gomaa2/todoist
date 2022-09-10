@@ -22,7 +22,6 @@ app.use(cors({
     methods: ['GET', 'POST', 'PUT']
 }));
 
-
 registerRoute(app);
 loginRoute(app);
 logoutRoute(app);
