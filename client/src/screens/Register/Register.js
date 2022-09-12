@@ -1,6 +1,6 @@
 import React, {useEffect, useRef, useState} from 'react';
 import './Register.css';
-import {Link, useNavigate} from "react-router-dom";
+import {Link, Navigate, useNavigate} from "react-router-dom";
 import inputChangeHandlerHelper from '../../utls/input.change.handler';
 import {register} from '../../store/actions/auth.actions';
 import {connect} from "react-redux";
@@ -76,6 +76,7 @@ const Register = (props) => {
 
     return (
         <div className={'Register'}>
+            {props.isAuthenticated && <Navigate to={'/'} />}
             <div className={'Register__container'}>
                 <div className={'Register__header'}>
                     <h1 className="Register__header-greeting">Create your account</h1>
