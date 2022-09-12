@@ -86,6 +86,25 @@
     outline: none;
 }
 
+.Register__form-button:disabled {
+    color: #ccc;
+    background: unset;
+    cursor: not-allowed;
+    border: 1px solid black;
+    box-shadow: none;
+}
+
+.input__invalid {
+    border: 1px solid red;
+    background-color: #fda49a;
+}
+
+.Register__form-error {
+    color: red;
+    opacity: 1 !important;
+    transform: none !important;
+}
+
 .Register * {
     transition: all ease-in-out 0.3s;
     opacity: 0;
