@@ -2,8 +2,8 @@ import React, {useEffect, useState} from 'react';
 import './Login.css';
 import {Link, Navigate, useNavigate} from "react-router-dom";
 import {connect} from "react-redux";
-import inputChangeHandlerHelper from "../../utls/input.change.handler";
-import {login} from "../../store/actions/auth.actions";
+import inputChangeHandlerHelper from "../../../utls/input.change.handler";
+import {login} from "../../../store/actions/auth.actions";
 
 const Login = (props) => {
     const [form, setForm] = useState({
@@ -54,7 +54,6 @@ const Login = (props) => {
 
     useEffect(() => {
         const elements = document.querySelectorAll('.Login *');
-        console.log(elements);
         setTimeout(() => {
             elements.forEach(el => {
                 el.style.opacity = 1;

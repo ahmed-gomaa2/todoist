@@ -3,11 +3,13 @@ import {Route, Routes} from "react-router-dom";
 import Home from "./screens/Home/Home";
 import {useEffect} from "react";
 import {connect} from "react-redux";
-import Login from "./screens/Login/Login";
-import Register from "./screens/Register/Register";
+import Login from "./screens/Landing/Login/Login";
+import Register from "./screens/Landing/Register/Register";
 import Spinner from "./components/UI/Spinner/Spinner";
 import {loadUser} from "./store/actions/auth.actions";
 import ProtectedRoute from "./components/HOC/ProtectedRoute";
+import Layout from "./components/HOC/Layout/Layout";
+import Landing from './screens/Landing/Landing';
 
 function App(props) {
 
@@ -19,18 +21,43 @@ function App(props) {
         <div className="App">
             {props.loadingUser ? (
                     <Spinner/>
-                ) :
+                ):
                 <Routes>
                     <Route path={'/'} exact element={
                         <ProtectedRoute isAuthenticated={props.isAuthenticated}>
                             <Home history={props.history}/>
                         </ProtectedRoute>
                     }/>
-                    <Route path={'/login'} exact element={<Login history={props.history}/>}/>
-                    <Route path={'/register'} exact element={<Register history={props.history}/>}/>
+
+                    <Route path={'/landing'} exact element={
+                        <ProtectedRoute isAuthenticated={!props.isAuthenticated}>
+                            <Layout>
+                                <Landing />
+                            </Layout>
+                        </ProtectedRoute>
+                    }/>
+
+                    <Route path={'/login'} exact element={
+                        <Layout>
+                            <Login history={props.history}/>
+                        </Layout>
+                    }/>
+
+                    <Route path={'/register'} exact element={
+                        <Layout>
+                            <Register history={props.history}/>
+                        </Layout>
+                    }/>
+
                     <Route
                         path="*"
-                        element={<Login />}
+                        element={
+                            <ProtectedRoute isAuthenticated={!props.isAuthenticated}>
+                                <Layout>
+                                    <Landing />
+                                </Layout>
+                            </ProtectedRoute>
+                        }
                     />
                 </Routes>
             }

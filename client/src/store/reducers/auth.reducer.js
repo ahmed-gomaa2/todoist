@@ -57,6 +57,18 @@ export default (state = initialState, action) => {
                     msg: null
                 }
             }
+        case actionTypes.LOG_USER_OUT_SUCCESS:
+            localStorage.removeItem('token');
+            return {
+                ...state,
+                isAuthenticated: false,
+                user: null,
+                token: null,
+                error: {
+                    type: '',
+                    msg: null
+                }
+            }
         default:
             return state;
     }

@@ -2,7 +2,7 @@ import axios from 'axios';
 import setHeadersHelper from "../../utls/set.headers.helper";
 import {
     LOAD_USER_FAIL,
-    LOAD_USER_SUCCESS, LOGIN_USER_SUCCESS,
+    LOAD_USER_SUCCESS, LOG_USER_OUT_FAIL, LOG_USER_OUT_SUCCESS, LOGIN_USER_SUCCESS,
     REGISTER_USER_END,
     REGISTER_USER_FAIL,
     REGISTER_USER_START,
@@ -25,13 +25,9 @@ export const loadUser = () => async dispatch => {
     try{
         dispatch(loadUserStart());
         const token = localStorage.token;
-        console.log(token);
-
         setHeadersHelper(token);
 
-
         const user = await axios.get('/server/get-user');
-        console.log(user.data);
         dispatch({
             type: LOAD_USER_SUCCESS,
             user: user.data
@@ -79,3 +75,32 @@ export const login = data => async dispatch => {
         });
     }
 }
+
+export const logout = () => async dispatch => {
+    try {
+        const loggedOut = await axios.get('/server/logout');
+        dispatch({
+            type: LOG_USER_OUT_SUCCESS
+        });
+    }catch (e) {
+        dispatch({
+            type: LOG_USER_OUT_FAIL,
+            error: err.response.data.error
+        });
+    }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

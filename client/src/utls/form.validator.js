@@ -24,7 +24,5 @@ export default (value, rules) => {
         isValid = value.length <= rules.maxLength && isValid;
     }
 
-    console.log(isValid, value);
-
     return isValid;
 }

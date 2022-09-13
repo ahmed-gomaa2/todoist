@@ -26,7 +26,6 @@ export default (e, formData) => {
     let formIsValid = true;
     for (let inputKey in updatedFormData) {
         formIsValid = updatedFormData[inputKey].valid && formIsValid;
-        console.log(formIsValid);
     }
     // console.log(formIsValid);
     return {formIsValid, updatedFormData};

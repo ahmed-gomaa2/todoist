@@ -1,8 +1,8 @@
 import React, {useEffect, useRef, useState} from 'react';
 import './Register.css';
 import {Link, Navigate, useNavigate} from "react-router-dom";
-import inputChangeHandlerHelper from '../../utls/input.change.handler';
-import {register} from '../../store/actions/auth.actions';
+import inputChangeHandlerHelper from '../../../utls/input.change.handler';
+import {register} from '../../../store/actions/auth.actions';
 import {connect} from "react-redux";
 
 const Register = (props) => {
@@ -65,7 +65,6 @@ const Register = (props) => {
 
     useEffect(() => {
         const elements = document.querySelectorAll('.Register *');
-        console.log(elements);
         setTimeout(() => {
             elements.forEach(el => {
                 el.style.opacity = 1;
