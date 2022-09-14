@@ -10,6 +10,7 @@ import {loadUser} from "./store/actions/auth.actions";
 import ProtectedRoute from "./components/HOC/ProtectedRoute";
 import Layout from "./components/HOC/Layout/Layout";
 import Landing from './screens/Landing/Landing';
+import Body from "./components/UI/Body/Body";
 
 function App(props) {
 
@@ -24,13 +25,16 @@ function App(props) {
                 ):
                 <Routes>
                     <Route path={'/'} exact element={
-                        <ProtectedRoute isAuthenticated={props.isAuthenticated}>
+                        <ProtectedRoute isAuthenticated={props.isAuthenticated} route={'/landing'}>
                             <Home history={props.history}/>
                         </ProtectedRoute>
-                    }/>
+                    }>
+                        <Route path={'/dashboard/:day'} exact element={<Body history={props.history}/>} />
+                        <Route path={'/dashboard/projects/:id'} exact element={<Body history={props.history} />} />
+                    </Route>
 
                     <Route path={'/landing'} exact element={
-                        <ProtectedRoute isAuthenticated={!props.isAuthenticated}>
+                        <ProtectedRoute isAuthenticated={!props.isAuthenticated} route={'/'}>
                             <Layout>
                                 <Landing />
                             </Layout>
@@ -49,16 +53,13 @@ function App(props) {
                         </Layout>
                     }/>
 
-                    <Route
-                        path="*"
-                        element={
-                            <ProtectedRoute isAuthenticated={!props.isAuthenticated}>
+                    <Route path="*" element={
+                            <ProtectedRoute isAuthenticated={!props.isAuthenticated} route={'/landing'}>
                                 <Layout>
                                     <Landing />
                                 </Layout>
                             </ProtectedRoute>
-                        }
-                    />
+                    }/>
                 </Routes>
             }
         </div>

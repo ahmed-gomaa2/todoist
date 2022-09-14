@@ -3,7 +3,7 @@ import {Navigate} from 'react-router-dom'
 
 const ProtectedRoute = (props) => {
     if(!props.isAuthenticated) {
-        return <Navigate to={'/landing'} />
+        return <Navigate to={props.route} />
     }
     return props.children;
 };
