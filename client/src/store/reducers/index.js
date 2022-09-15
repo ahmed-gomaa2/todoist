@@ -1,5 +1,6 @@
 import {combineReducers} from "redux";
 import auth from './auth.reducer';
+import uiReducer from "./ui.reducer";
 
 const initialState = {
     msg: 'hello from the redux store!'
@@ -10,5 +11,6 @@ const initialReducer = (state=initialState) => {
 }
 
 export default combineReducers({
-    auth: auth
+    auth: auth,
+    ui: uiReducer
 });

@@ -1,14 +1,27 @@
 import React, {useState} from 'react';
 import {Link, NavLink} from "react-router-dom";
 import './Sidebar.css';
+import {toggleSidebar} from "../../../store/actions/ui.actions";
+import {connect} from "react-redux";
 
 const Sidebar = (props) => {
     const [dropdown, setDropdown] = useState(false);
+
+    const linksClickHandler = e => {
+        const link = e.target.closest('a');
+        if(!link) return;
+        props.toggleSidebar();
+    }
+
     return (
         <div className={'Sidebar'}>
-            <div className="Sidebar__container">
+            <div className="Sidebar__container" onClick={e => linksClickHandler(e)}>
                 <div className="Sidebar__header">
                     <Link to={'/'}>T</Link>
+                    <div onClick={props.toggleSidebar} className="Sidebar__burger">
+                        <div></div>
+                        <div></div>
+                    </div>
                 </div>
                 <div className="Sidebar__links">
                     <ul className="Sidebar__links-ul">
@@ -68,4 +81,4 @@ const Sidebar = (props) => {
     );
 };
 
-export default Sidebar;
+export default connect(null, {toggleSidebar}) (Sidebar);

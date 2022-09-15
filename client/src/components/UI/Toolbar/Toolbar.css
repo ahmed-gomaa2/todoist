@@ -15,10 +15,32 @@
 .Toolbar__left {
     position: relative;
     padding: 20px;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+
+.Toolbar__burger {
+    width: 30px;
+    height: 15px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+    margin-right: 20px;
+    cursor: pointer;
+
+}
+
+.Toolbar__burger div {
+    width: 25px;
+    height: 2px;
+    background: black;
 }
 
 .Toolbar__searchbar {
     height: 100%;
+    display: none;
 }
 
 .Toolbar__searchbar i {
@@ -80,6 +102,12 @@
 
 .Toolbar__avatar i {
     margin: 0;
+}
+
+@media (min-width: 700px) {
+    .Toolbar__searchbar {
+        display: block;
+    }
 }
 
 

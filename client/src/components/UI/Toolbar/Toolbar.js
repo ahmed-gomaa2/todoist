@@ -1,11 +1,18 @@
 import React from 'react';
 import './Toolbar.css';
+import {connect} from "react-redux";
+import {toggleSidebar} from "../../../store/actions/ui.actions";
 
 const Toolbar = props => {
     return (
         <div className={'Toolbar'}>
             <div className="Toolbar__container">
                 <div className="Toolbar__left">
+                    <div onClick={props.toggleSidebar} className="Toolbar__burger">
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                    </div>
                     <div className="Toolbar__searchbar">
                         <i className="fa-solid fa-magnifying-glass"></i>
                         <input placeholder={'Search'} type="text"/>
@@ -30,4 +37,4 @@ const Toolbar = props => {
     );
 };
 
-export default Toolbar;
+export default connect(null, {toggleSidebar}) (Toolbar);
