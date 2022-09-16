@@ -2,7 +2,12 @@ import * as actionTypes from '../actions/types.actions';
 
 const initialState = {
     toggleSidebar: false,
-    toggleCreateProjectModel:false
+    toggleCreateProjectModel:false,
+    toggleCreateTaskForm: {
+        todo: false,
+        inProgress: false,
+        completed: false
+    }
 }
 
 export default (state=initialState, action) => {
@@ -16,6 +21,14 @@ export default (state=initialState, action) => {
             return {
                 ...state,
                 toggleCreateProjectModel: !state.toggleCreateProjectModel
+            }
+        case actionTypes.TOGGLE_CREATE_TASK:
+            const formObject = {...state.toggleCreateTaskForm};
+            formObject[action.payload] = !formObject[action.payload];
+            console.log(formObject)
+            return {
+                ...state,
+                toggleCreateTaskForm: formObject
             }
         default:
             return state;
