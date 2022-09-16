@@ -1,8 +1,9 @@
 import React, {useState} from 'react';
 import {Link, NavLink} from "react-router-dom";
 import './Sidebar.css';
-import {toggleSidebar} from "../../../store/actions/ui.actions";
+import {toggleSidebar, toggleCreateProject} from "../../../store/actions/ui.actions";
 import {connect} from "react-redux";
+import CreateProject from "../../CreateProject/CreateProject";
 
 const Sidebar = (props) => {
     const [dropdown, setDropdown] = useState(false);
@@ -48,8 +49,14 @@ const Sidebar = (props) => {
                                 <div onClick={e => setDropdown(!dropdown)} className={'Sidebar__projects-header'}>
                                     <i className={`fa-solid fa-chevron-right ${dropdown && 'down'}`}></i>
                                     <p>Projects</p>
-                                    <i className="add fa-solid fa-plus"></i>
+                                    <i onClick={e => {
+                                        e.preventDefault();
+                                        e.stopPropagation();
+                                        props.toggleCreateProject();
+                                    }} className="add fa-solid fa-plus"></i>
                                 </div>
+                                <CreateProject />
+
                                 <ul className={`Sidebar__projects-ul ${dropdown && 'Sidebar__projects-ul-active'}`}>
                                     <li className="Sidebar__project"><span></span><NavLink className={navData => navData.isActive ? 'Sidebar__link-active' : null} to={'/dashboard/projects1'}>project1</NavLink></li>
                                     <li className="Sidebar__project"><span></span><NavLink className={navData => navData.isActive ? 'Sidebar__link-active' : null} to={'/dashboard/project2'}>project2</NavLink></li>
@@ -81,4 +88,10 @@ const Sidebar = (props) => {
     );
 };
 
-export default connect(null, {toggleSidebar}) (Sidebar);
+const mapStateToProps = state => {
+    return {
+        toggleCreateProjectModel: state.ui.toggleCreateProjectModel
+    }
+}
+
+export default connect(mapStateToProps, {toggleSidebar, toggleCreateProject}) (Sidebar);

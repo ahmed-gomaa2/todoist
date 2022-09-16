@@ -4,6 +4,7 @@
     border-right: 1px solid lightgray;
     /*padding: 10px;*/
     visibility: hidden;
+    transition: all ease-in-out 0.2s;
 }
 
 .Sidebar__container {
