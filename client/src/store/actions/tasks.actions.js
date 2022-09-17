@@ -1,5 +1,6 @@
 import axios from 'axios';
 import {
+    CREATE_PROJECT_FAIL, CREATE_PROJECT_SUCCESS,
     END_SETTING_CURRENT_PROJECT,
     GET_ALL_TASKS_FAIL,
     GET_ALL_TASKS_SUCCESS,
@@ -22,6 +23,26 @@ export const getProjects = () => async dispatch => {
     }catch (e) {
         dispatch({
             type: GET_PROJECTS_FAIL,
+            error: e.response.data.error
+        })
+    }
+}
+
+export const createProject = (projectData, navigate) => async dispatch => {
+    try {
+        const project = await axios.post('/server/create-project', projectData);
+        dispatch({
+            type: CREATE_PROJECT_SUCCESS,
+            project: project.data.projectData
+        });
+
+        console.log(project.data)
+
+        await dispatch(setCurrentProject(project.data.projectData.id));
+        navigate('/dashboard/projects/' + project.data.projectData.id);
+    }catch (e) {
+        dispatch({
+            typ: CREATE_PROJECT_FAIL,
             error: e.response.data.error
         })
     }
@@ -91,6 +112,8 @@ export const getAllTasks = () => async dispatch => {
         })
     }
 }
+
+
 
 
 

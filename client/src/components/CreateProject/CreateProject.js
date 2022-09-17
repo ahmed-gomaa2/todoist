@@ -1,10 +1,24 @@
-import React from 'react';
+import React, {useState} from 'react';
 import './CreateProject.css';
 import {connect} from "react-redux";
 import {toggleCreateProject} from "../../store/actions/ui.actions";
-
+import {createProject} from "../../store/actions/tasks.actions";
+import {useNavigate} from "react-router-dom";
 
 const CreateProject = props => {
+    const [name, setName] = useState('');
+    const navigate = useNavigate();
+
+    const formSubmitHandler = e => {
+        e.preventDefault();
+        const projectData = {
+            name
+        }
+
+        props.createProject(projectData, navigate);
+        setName('');
+        props.toggleCreateProject();
+    }
     return (
         <div className={`CreateProject ${props.toggleCreateProjectModel && 'CreateProject__active'}`}>
             <div onClick={props.toggleCreateProject} className="CreateProject__overlay"></div>
@@ -12,19 +26,19 @@ const CreateProject = props => {
                 <div className="CreateProject__header">
                     <p>Add Project</p>
                 </div>
-                <form className="CreateProject__form">
+                <form onSubmit={e => formSubmitHandler(e)} className="CreateProject__form">
                     <div className="CreateProject__form-item">
                         <label htmlFor="" className="CreateProject__form-label">Name</label>
-                        <input type="text" placeholder={'Project Name'} className="CreateProject__form-input"/>
+                        <input type="text" onChange={e => setName(e.target.value)} value={name} placeholder={'Project Name'} className="CreateProject__form-input"/>
                     </div>
                     <div className="CreateProject__form-buttons">
                         <div></div>
                         <div>
-                            <button onClick={e => {
+                            <button type={'reset'} onClick={e => {
                                 e.preventDefault();
                                 props.toggleCreateProject();
                             }} className="CreateProject__cancel">cancel</button>
-                            <button className="CreateProject__submit">create</button>
+                            <button type={"submit"} className="CreateProject__submit">create</button>
                         </div>
                     </div>
                 </form>
@@ -39,4 +53,4 @@ const mapStateToProps = state => {
     }
 }
 
-export default connect(mapStateToProps, {toggleCreateProject}) (CreateProject);
+export default connect(mapStateToProps, {toggleCreateProject, createProject}) (CreateProject);
