@@ -11,6 +11,7 @@ import ProtectedRoute from "./components/HOC/ProtectedRoute";
 import Layout from "./components/HOC/Layout/Layout";
 import Landing from './screens/Landing/Landing';
 import Body from "./components/UI/Body/Body";
+import Week from "./components/UI/Week/Week";
 
 function App(props) {
 
@@ -22,15 +23,15 @@ function App(props) {
         <div className="App">
             {props.loadingUser ? (
                     <Spinner/>
-                ):
-                <Routes>
+                ): <Routes>
                     <Route path={'/'} exact element={
                         <ProtectedRoute isAuthenticated={props.isAuthenticated} route={'/landing'}>
                             <Home history={props.history}/>
                         </ProtectedRoute>
                     }>
-                        <Route path={'/dashboard/:day'} exact element={<Body history={props.history}/>} />
-                        <Route path={'/dashboard/projects/:id'} exact element={<Body history={props.history} />} />
+                        <Route path={'/dashboard/today'} exact element={<Body history={props.history}/>} />
+                        <Route path={'/dashboard/week'} exact element={<Week />} />
+                        <Route path={'/dashboard/projects/:id'} exact element={<Body history={props.history} />}/>
                     </Route>
 
                     <Route path={'/landing'} exact element={

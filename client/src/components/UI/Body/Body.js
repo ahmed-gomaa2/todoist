@@ -1,10 +1,14 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import './Body.css';
 import CreateTask from "../../CreateTask/CreateTask";
 import {toggleCreateTask} from "../../../store/actions/ui.actions";
 import {connect} from "react-redux";
+import {setCurrentProject} from "../../../store/actions/tasks.actions";
+import {useParams} from "react-router-dom";
 
 const Body = props => {
+    const params = useParams();
+
     return (
         <div className={'Body'}>
             <div className="Body__container">
@@ -57,8 +61,10 @@ const Body = props => {
 
 const mapStateToProps = state => {
     return {
-        formState: state.ui.toggleCreateTaskForm
+        formState: state.ui.toggleCreateTaskForm,
+        projects: state.tasks.projects,
+        currentProject: state.tasks.currentProject
     }
 }
 
-export default connect(mapStateToProps, {toggleCreateTask}) (Body);
+export default connect(mapStateToProps, {toggleCreateTask, setCurrentProject}) (Body);

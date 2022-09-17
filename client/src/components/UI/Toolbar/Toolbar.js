@@ -25,7 +25,7 @@ const Toolbar = props => {
                     <div className="Toolbar__user">
                         <div className="Toolbar__name">
                             <i className="fa-sharp fa-solid fa-chevron-right"></i>
-                            <p>Ahmed Gomaa</p>
+                            <p>{props.user.username}</p>
                         </div>
                         <div className="Toolbar__avatar">
                             <i className="fa-sharp fa-solid fa-user-astronaut"></i>
@@ -37,4 +37,10 @@ const Toolbar = props => {
     );
 };
 
-export default connect(null, {toggleSidebar}) (Toolbar);
+const mapStateToProps = state => {
+    return {
+        user: state.auth.user
+    }
+}
+
+export default connect(mapStateToProps, {toggleSidebar}) (Toolbar);

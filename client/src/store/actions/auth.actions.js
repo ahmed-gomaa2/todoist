@@ -8,6 +8,7 @@ import {
     REGISTER_USER_START,
     REGISTER_USER_SUCCESS
 } from "./types.actions";
+import {getProjects} from "./tasks.actions";
 
 const loadUserStart = () => {
     return {
@@ -33,8 +34,8 @@ export const loadUser = () => async dispatch => {
             user: user.data
         });
 
+        await dispatch(getProjects());
         dispatch(loadUserEnd());
-
     }catch (e) {
         dispatch({
             type: LOAD_USER_FAIL,
@@ -85,7 +86,7 @@ export const logout = () => async dispatch => {
     }catch (e) {
         dispatch({
             type: LOG_USER_OUT_FAIL,
-            error: err.response.data.error
+            error: e.response.data.error
         });
     }
 }

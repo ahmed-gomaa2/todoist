@@ -12,6 +12,9 @@ const createTodoRoute = require('./api/tasks/create.task');
 const createProjectRoute = require('./api/tasks/create.project');
 const makeTodoDone = require('./api/tasks/make.todo.done');
 const makeProjectCompleted = require('./api/tasks/make.project-completed');
+const getProjectsRoute = require('./api/tasks/get.user.projects');
+const getProjectTasksRoute = require('./api/tasks/get.project.tasks');
+const getAllTasksRoute = require('./api/tasks/get.user-tasks');
 
 const app = express();
 
@@ -30,6 +33,9 @@ createTodoRoute(app);
 createProjectRoute(app);
 makeTodoDone(app);
 makeProjectCompleted(app);
+getProjectsRoute(app);
+getAllTasksRoute(app);
+getProjectTasksRoute(app);
 
 const server = http.createServer(app);
 

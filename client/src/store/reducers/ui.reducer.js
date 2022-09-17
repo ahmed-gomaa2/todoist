@@ -25,7 +25,6 @@ export default (state=initialState, action) => {
         case actionTypes.TOGGLE_CREATE_TASK:
             const formObject = {...state.toggleCreateTaskForm};
             formObject[action.payload] = !formObject[action.payload];
-            console.log(formObject)
             return {
                 ...state,
                 toggleCreateTaskForm: formObject

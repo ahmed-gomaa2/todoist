@@ -1,17 +1,24 @@
-import React, {useState} from 'react';
-import {Link, NavLink} from "react-router-dom";
+import React, {useEffect, useState} from 'react';
+import {Link, NavLink, useParams} from "react-router-dom";
 import './Sidebar.css';
 import {toggleSidebar, toggleCreateProject} from "../../../store/actions/ui.actions";
 import {connect} from "react-redux";
 import CreateProject from "../../CreateProject/CreateProject";
+import {setCurrentProject} from "../../../store/actions/tasks.actions";
 
 const Sidebar = (props) => {
     const [dropdown, setDropdown] = useState(false);
+    const params = useParams();
 
     const linksClickHandler = e => {
         const link = e.target.closest('a');
         if(!link) return;
         props.toggleSidebar();
+    }
+
+    const projectClickHandler = (e, p) => {
+        // e.preventDefault();
+        // props.setCurrentProject(p.id);
     }
 
     return (
@@ -38,12 +45,12 @@ const Sidebar = (props) => {
                                 <p>Week</p>
                             </NavLink>
                         </li>
-                        <li className="Sidebar__link">
-                            <NavLink className={navData => navData.isActive ? 'Sidebar__link-active' : null} to={'/dashboard/calendar'}>
-                                <i className="fa-regular fa-calendar-days"></i>
-                                <p>Calendar</p>
-                            </NavLink>
-                        </li>
+                        {/*<li className="Sidebar__link">*/}
+                        {/*    <NavLink className={navData => navData.isActive ? 'Sidebar__link-active' : null} to={'/dashboard/calendar'}>*/}
+                        {/*        <i className="fa-regular fa-calendar-days"></i>*/}
+                        {/*        <p>Calendar</p>*/}
+                        {/*    </NavLink>*/}
+                        {/*</li>*/}
                         <li className={`Sidebar__link ${dropdown && 'Sidebar__link-dropdown'}`}>
                             <div className={'Sidebar__projects'}>
                                 <div onClick={e => setDropdown(!dropdown)} className={'Sidebar__projects-header'}>
@@ -58,9 +65,9 @@ const Sidebar = (props) => {
                                 <CreateProject />
 
                                 <ul className={`Sidebar__projects-ul ${dropdown && 'Sidebar__projects-ul-active'}`}>
-                                    <li className="Sidebar__project"><span></span><NavLink className={navData => navData.isActive ? 'Sidebar__link-active' : null} to={'/dashboard/projects1'}>project1</NavLink></li>
-                                    <li className="Sidebar__project"><span></span><NavLink className={navData => navData.isActive ? 'Sidebar__link-active' : null} to={'/dashboard/project2'}>project2</NavLink></li>
-                                    <li className="Sidebar__project"><span></span><NavLink className={navData => navData.isActive ? 'Sidebar__link-active' : null} to={'/dashboard/project3'}>project3</NavLink></li>
+                                    {props.projects.map(p => (
+                                        <li className="Sidebar__project"><span></span><NavLink onClick={e => projectClickHandler(e, p)} className={navData => navData.isActive ? 'Sidebar__link-active' : null} to={`/dashboard/projects/${p.id}`}>{p.name}</NavLink></li>
+                                    ))}
                                 </ul>
                             </div>
                         </li>
@@ -90,8 +97,9 @@ const Sidebar = (props) => {
 
 const mapStateToProps = state => {
     return {
-        toggleCreateProjectModel: state.ui.toggleCreateProjectModel
+        toggleCreateProjectModel: state.ui.toggleCreateProjectModel,
+        projects: state.tasks.projects
     }
 }
 
-export default connect(mapStateToProps, {toggleSidebar, toggleCreateProject}) (Sidebar);
+export default connect(mapStateToProps, {toggleSidebar, toggleCreateProject, setCurrentProject}) (Sidebar);

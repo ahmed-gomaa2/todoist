@@ -50,6 +50,7 @@ export default (state = initialState, action) => {
             }
         case actionTypes.LOAD_USER_SUCCESS:
             return {
+                ...state,
                 user: action.user,
                 isAuthenticated: true,
                 error: {
