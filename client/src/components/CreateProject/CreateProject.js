@@ -5,6 +5,7 @@ import {toggleCreateProject} from "../../store/actions/ui.actions";
 import {createProject} from "../../store/actions/tasks.actions";
 import {useNavigate} from "react-router-dom";
 import inputChangeHandlerHelper from "../../utls/input.change.handler";
+import EditProject from "../EditProject/EditProject";
 
 const CreateProject = props => {
     const [form, setForm] = useState({

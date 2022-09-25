@@ -7,7 +7,7 @@ import {
     DELETE_PROJECT_FAIL,
     DELETE_PROJECT_SUCCESS,
     DELETE_TASK_FAIL,
-    DELETE_TASK_SUCCESS, EDIT_TASK_FAIL, EDIT_TASK_SUCCESS,
+    DELETE_TASK_SUCCESS, EDIT_PROJECT_FAIL, EDIT_PROJECT_SUCCESS, EDIT_TASK_FAIL, EDIT_TASK_SUCCESS,
     END_SETTING_CURRENT_PROJECT,
     GET_ALL_TASKS_FAIL,
     GET_ALL_TASKS_SUCCESS,
@@ -149,13 +149,14 @@ export const deleteTask = taskId => async dispatch => {
     }
 }
 
-export const deleteProject = project_id => async dispatch => {
+export const deleteProject = (project_id, navigate) => async dispatch => {
     try {
         const projectId = await axios.delete('/server/delete-project/' + project_id);
         dispatch({
             type: DELETE_PROJECT_SUCCESS,
             projectId: projectId.data
         });
+        navigate('/dashboard/today');
     }catch (e) {
         dispatch({
             type: DELETE_PROJECT_FAIL,
@@ -179,7 +180,19 @@ export const editTask = taskData => async dispatch => {
     }
 }
 
-
+export const editProject = projectData => async dispatch => {
+    try {
+        const data = await axios.put('/server/edit-project', projectData);
+        dispatch({
+            type: EDIT_PROJECT_SUCCESS,
+            projectD: data.data
+        });
+    }catch (e) {
+        dispatch({
+            type: EDIT_PROJECT_FAIL,
+        })
+    }
+}
 
 
 

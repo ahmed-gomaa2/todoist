@@ -81,6 +81,15 @@ export default (state = initialState, action) => {
                 ...state,
                 tasks: [...otherTasks]
             }
+        case actionTypes.EDIT_PROJECT_SUCCESS:
+            const editedProject = state.projects.filter(p => p.id == action.projectD.id)[0];
+            editedProject.name = action.projectD.name;
+            const otherProjects = state.projects.filter(p => p.id != action.projectD.id);
+            otherProjects.splice(state.projects.indexOf(editedProject), 0, editedProject);
+            return {
+                ...state,
+                projects: otherProjects
+            }
         default:
             return state;
     }

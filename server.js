@@ -18,6 +18,7 @@ const getAllTasksRoute = require('./api/tasks/get.user-tasks');
 const deleteTaskRoute = require('./api/tasks/delete.task');
 const deleteProjectRoute = require('./api/tasks/delete.project');
 const editTaskRoute = require('./api/tasks/edit.task');
+const editProjectRoute = require('./api/tasks/edit.project');
 
 const app = express();
 
@@ -42,6 +43,7 @@ getProjectTasksRoute(app);
 deleteTaskRoute(app);
 deleteProjectRoute(app);
 editTaskRoute(app);
+editProjectRoute(app);
 
 const server = http.createServer(app);
 

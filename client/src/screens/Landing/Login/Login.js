@@ -81,7 +81,7 @@ const Login = (props) => {
                         <div className="Login__form-item">
                             <label htmlFor="" className="Login__form-label">Your password</label>
                             <div className="Login__form-input">
-                                <input data-key={'password'} className={`input ${!form.password.valid && form.password.touched && 'input__invalid'}`} type="text" placeholder={'Enter Your Password'}/>
+                                <input data-key={'password'} className={`input ${!form.password.valid && form.password.touched && 'input__invalid'}`} type="password" placeholder={'Enter Your Password'}/>
                                 <i className="fa-solid fa-lock"></i>
                             </div>
                             {props.error.type === 'password' ? <p className={'Register__form-error'}>{props.error.msg}</p> : null}
