@@ -1,11 +1,11 @@
 import formValidator from "./form.validator";
 
-export default (e, formData) => {
-    const changedInput = e.target.closest('.input');
+export default (e, formData, className) => {
+    const changedInput = e.target.closest(`.${className}`);
     if(!changedInput) return;
-    // console.log(changedInput);
+    console.log(changedInput);
     const updatedInputKey = changedInput.dataset.key;
-    // console.log(updatedInputKey)
+    console.log(updatedInputKey)
     const updatedFormData = {
         ...formData
     }
@@ -16,7 +16,7 @@ export default (e, formData) => {
         ...updatedFormData[updatedInputKey]
     }
 
-    // console.log(updatedFormElement);
+    console.log(updatedFormElement);
 
     updatedFormElement.value = e.target.value;
     // console.log(updatedFormElement.value);

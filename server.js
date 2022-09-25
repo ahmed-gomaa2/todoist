@@ -15,6 +15,9 @@ const makeProjectCompleted = require('./api/tasks/make.project-completed');
 const getProjectsRoute = require('./api/tasks/get.user.projects');
 const getProjectTasksRoute = require('./api/tasks/get.project.tasks');
 const getAllTasksRoute = require('./api/tasks/get.user-tasks');
+const deleteTaskRoute = require('./api/tasks/delete.task');
+const deleteProjectRoute = require('./api/tasks/delete.project');
+const editTaskRoute = require('./api/tasks/edit.task');
 
 const app = express();
 
@@ -36,6 +39,9 @@ makeProjectCompleted(app);
 getProjectsRoute(app);
 getAllTasksRoute(app);
 getProjectTasksRoute(app);
+deleteTaskRoute(app);
+deleteProjectRoute(app);
+editTaskRoute(app);
 
 const server = http.createServer(app);
 

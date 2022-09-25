@@ -5,6 +5,8 @@ import {toggleSidebar, toggleCreateProject} from "../../../store/actions/ui.acti
 import {connect} from "react-redux";
 import CreateProject from "../../CreateProject/CreateProject";
 import {setCurrentProject} from "../../../store/actions/tasks.actions";
+import Project from "./Project/Project";
+import {logout} from "../../../store/actions/auth.actions";
 
 const Sidebar = (props) => {
     const [dropdown, setDropdown] = useState(false);
@@ -66,7 +68,7 @@ const Sidebar = (props) => {
 
                                 <ul className={`Sidebar__projects-ul ${dropdown && 'Sidebar__projects-ul-active'}`}>
                                     {props.projects.map(p => (
-                                        <li className="Sidebar__project"><span></span><NavLink onClick={e => projectClickHandler(e, p)} className={navData => navData.isActive ? 'Sidebar__link-active' : null} to={`/dashboard/projects/${p.id}`}>{p.name}</NavLink></li>
+                                        <Project p={p} />
                                     ))}
                                 </ul>
                             </div>
@@ -81,7 +83,7 @@ const Sidebar = (props) => {
                                     <i className="fa-solid fa-gear"></i>
                                     <p>Settings</p>
                                 </NavLink></li>
-                            <li className="Sidebar__footer-link">
+                            <li onClick={e => props.logout()} className="Sidebar__footer-link">
                                 <div className="Sidebar__footer-link">
                                     <i className="fa-solid fa-right-from-bracket"></i>
                                     <p>Logout</p>
@@ -102,4 +104,4 @@ const mapStateToProps = state => {
     }
 }
 
-export default connect(mapStateToProps, {toggleSidebar, toggleCreateProject, setCurrentProject}) (Sidebar);
+export default connect(mapStateToProps, {logout, toggleSidebar, toggleCreateProject, setCurrentProject}) (Sidebar);

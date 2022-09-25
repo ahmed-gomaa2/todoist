@@ -40,7 +40,7 @@ const Register = (props) => {
     const navigate = useNavigate();
 
     const inputChangeHandler = e => {
-        const {formIsValid, updatedFormData} = inputChangeHandlerHelper(e, form);
+        const {formIsValid, updatedFormData} = inputChangeHandlerHelper(e, form, 'input');
         setForm(updatedFormData);
         setFormIsValid(formIsValid);
     }

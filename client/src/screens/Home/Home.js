@@ -10,13 +10,10 @@ const Home = (props) => {
     const params = useParams();
     const navigate = useNavigate();
     useEffect(() => {
-        console.log('hello', params.id, props.projects);
         if(!params.id) {
-            console.log('has')
             props.getAllTasks();
             navigate('/dashboard/today');
         }else {
-            console.log('hasnt')
             props.setCurrentProject(params.id);
         }
     }, [params.id]);

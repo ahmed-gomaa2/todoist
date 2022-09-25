@@ -17,7 +17,7 @@ module.exports = app => {
          const user_id = req.user;
          const project_id = req.params.id;
 
-         connection.query('SELECT * FROM projects_todos WHERE project_id = ?', project_id, (getProjectsTasksError, getProjectsTasksRes) => {
+         connection.query('SELECT * FROM projects_todos WHERE project_id = ? ORDER BY id DESC', project_id, (getProjectsTasksError, getProjectsTasksRes) => {
              if(getProjectsTasksError) {
                  res.status(500).json({error: {type: 'server', msg: 'SOMETHING WENT WRONG WITH THE SERVER!'}});
              }else if(getProjectsTasksRes.length === 0) {
@@ -30,7 +30,7 @@ module.exports = app => {
                              res.status(500).json({error: {type: 'server', msg: 'SOMETHING WENT WRONG WITH THE SERVER!'}});
                          }else {
                              const todo = {
-                                 ...findTaskRes,
+                                 ...findTaskRes[0],
                                  project_id: t.project_id,
                                  user_id
                              }

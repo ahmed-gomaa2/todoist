@@ -1,7 +1,9 @@
 .CreateTask {
     width: 100%;
-    background: white;
+    /*background: inherit;*/
+    background: #FFFFFF;
     padding: 10px;
+    border: 1px solid black;
 }
 
 .CreateTask__container {
@@ -30,11 +32,16 @@
 .CreateTask__form-input {
     width: 100%;
     height: 100%;
-    border: none;
+    border: 1px solid black;
+    border-radius: 5px;
     padding-left: 10px;
     font-style: italic;
     outline: none;
     resize: none;
+    display: flex;
+    align-items: center;
+    padding-top: 5px;
+    background: inherit;
 }
 
 .CreateTask__form-buttons {
@@ -67,12 +74,22 @@
 .CreateTask__form-submit {
     background: green;
     color: white;
+    margin-right: 0  !important;
 }
 
 .CreateTask__form-submit:hover {
     background: lightgreen;
     color: black;
 }
+
+.CreateTask__form-submit:disabled {
+    color: #ccc;
+    background: unset;
+    cursor: not-allowed;
+    border: 1px solid black;
+    box-shadow: none;
+}
+
 
 
 

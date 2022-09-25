@@ -12,7 +12,6 @@ const Dashboard = props => {
     const navigate = useNavigate();
     useEffect(() => {
         const windowWidth = window.innerWidth;
-        console.log(windowWidth)
         if(windowWidth <= 500) {
             props.toggleSidebar();
         }

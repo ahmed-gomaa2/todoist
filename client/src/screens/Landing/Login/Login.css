@@ -82,6 +82,14 @@
     box-shadow: 0 0 20px lightgreen;
 }
 
+.Login__form-button:disabled {
+    color: #ccc;
+    background: unset;
+    cursor: not-allowed;
+    border: 1px solid black;
+    box-shadow: none;
+}
+
 .login__form-register p a {
     outline: none;
 }

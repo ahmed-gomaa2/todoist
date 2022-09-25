@@ -1,6 +1,13 @@
 import axios from 'axios';
 import {
-    CREATE_PROJECT_FAIL, CREATE_PROJECT_SUCCESS,
+    CREATE_NEW_TASK_FAIL,
+    CREATE_NEW_TASK_SUCCESS,
+    CREATE_PROJECT_FAIL,
+    CREATE_PROJECT_SUCCESS,
+    DELETE_PROJECT_FAIL,
+    DELETE_PROJECT_SUCCESS,
+    DELETE_TASK_FAIL,
+    DELETE_TASK_SUCCESS, EDIT_TASK_FAIL, EDIT_TASK_SUCCESS,
     END_SETTING_CURRENT_PROJECT,
     GET_ALL_TASKS_FAIL,
     GET_ALL_TASKS_SUCCESS,
@@ -35,8 +42,6 @@ export const createProject = (projectData, navigate) => async dispatch => {
             type: CREATE_PROJECT_SUCCESS,
             project: project.data.projectData
         });
-
-        console.log(project.data)
 
         await dispatch(setCurrentProject(project.data.projectData.id));
         navigate('/dashboard/projects/' + project.data.projectData.id);
@@ -113,7 +118,66 @@ export const getAllTasks = () => async dispatch => {
     }
 }
 
+export const createNewTask = taskData => async dispatch => {
+    try{
+        const newTask = await axios.post('/server/create-task', taskData);
+        dispatch({
+            type: CREATE_NEW_TASK_SUCCESS,
+            newTask: newTask.data.todoData
+        });
+    }catch (e) {
+        dispatch({
+            type: CREATE_NEW_TASK_FAIL,
+            error: e.response.data.error
+        })
+    }
+}
 
+export const deleteTask = taskId => async dispatch => {
+    try{
+        const task_id = await axios.delete('/server/delete-task/' + taskId);
+
+        dispatch({
+            type: DELETE_TASK_SUCCESS,
+            taskId
+        });
+    }catch (e) {
+        dispatch({
+            type: DELETE_TASK_FAIL,
+            error: e.response.data.error
+        })
+    }
+}
+
+export const deleteProject = project_id => async dispatch => {
+    try {
+        const projectId = await axios.delete('/server/delete-project/' + project_id);
+        dispatch({
+            type: DELETE_PROJECT_SUCCESS,
+            projectId: projectId.data
+        });
+    }catch (e) {
+        dispatch({
+            type: DELETE_PROJECT_FAIL,
+            error: e.response.data.error
+        })
+    }
+}
+
+export const editTask = taskData => async dispatch => {
+    try {
+        const data = await axios.put('/server/edit-task', taskData);
+        dispatch({
+            type: EDIT_TASK_SUCCESS,
+            taskData: data.data
+        });
+    }catch (e) {
+        dispatch({
+            type: EDIT_TASK_FAIL,
+            error: e.response.data.error
+        })
+    }
+}
 
 
 

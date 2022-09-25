@@ -30,7 +30,7 @@ const Login = (props) => {
     const navigate = useNavigate();
 
     const inputChangeHandler = e => {
-        const {formIsValid, updatedFormData} = inputChangeHandlerHelper(e, form);
+        const {formIsValid, updatedFormData} = inputChangeHandlerHelper(e, form, 'input');
         setForm(updatedFormData);
         setFormIsValid(formIsValid);
     }
@@ -87,7 +87,7 @@ const Login = (props) => {
                             {props.error.type === 'password' ? <p className={'Register__form-error'}>{props.error.msg}</p> : null}
                         </div>
                         <div className={'Login__form-item'}>
-                            <button className={'Login__form-button'}>SIGN IN</button>
+                            <button disabled={!formIsValid} className={'Login__form-button'}>SIGN IN</button>
                         </div>
                     </form>
                     <div className={'login__form-register'}>

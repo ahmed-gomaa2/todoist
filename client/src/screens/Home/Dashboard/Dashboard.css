@@ -21,7 +21,7 @@
 .Dashboard__body {
     z-index: 200;
     height: 100vh;
-    transition: all ease-in-out 0.2s;
+    /*transition: all ease-in-out 0.2s;*/
     border-left: 1px solid lightgray;
 }
 

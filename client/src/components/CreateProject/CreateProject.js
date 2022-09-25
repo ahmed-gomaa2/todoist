@@ -4,19 +4,37 @@ import {connect} from "react-redux";
 import {toggleCreateProject} from "../../store/actions/ui.actions";
 import {createProject} from "../../store/actions/tasks.actions";
 import {useNavigate} from "react-router-dom";
+import inputChangeHandlerHelper from "../../utls/input.change.handler";
 
 const CreateProject = props => {
-    const [name, setName] = useState('');
+    const [form, setForm] = useState({
+        name: {
+            validation: {
+                required: true,
+                maxLength: 15
+            },
+            value: '',
+            valid: false,
+            touched: false
+        }
+    });
+    const [formIsValid, setFormIsValid] = useState(false);
     const navigate = useNavigate();
+
+    const nameChangeHandler = e => {
+        const {formIsValid, updatedFormData} = inputChangeHandlerHelper(e, form, 'CreateProject__form-input');
+        setForm(updatedFormData);
+        setFormIsValid(formIsValid);
+    }
 
     const formSubmitHandler = e => {
         e.preventDefault();
         const projectData = {
-            name
+            name: form.name.value
         }
 
         props.createProject(projectData, navigate);
-        setName('');
+
         props.toggleCreateProject();
     }
     return (
@@ -26,10 +44,10 @@ const CreateProject = props => {
                 <div className="CreateProject__header">
                     <p>Add Project</p>
                 </div>
-                <form onSubmit={e => formSubmitHandler(e)} className="CreateProject__form">
+                <form onChange={e => nameChangeHandler(e)} onSubmit={e => formSubmitHandler(e)} className="CreateProject__form">
                     <div className="CreateProject__form-item">
                         <label htmlFor="" className="CreateProject__form-label">Name</label>
-                        <input type="text" onChange={e => setName(e.target.value)} value={name} placeholder={'Project Name'} className="CreateProject__form-input"/>
+                        <input data-key={'name'} type="text" value={form.name.value} placeholder={'Project Name'} className="CreateProject__form-input"/>
                     </div>
                     <div className="CreateProject__form-buttons">
                         <div></div>
@@ -38,7 +56,7 @@ const CreateProject = props => {
                                 e.preventDefault();
                                 props.toggleCreateProject();
                             }} className="CreateProject__cancel">cancel</button>
-                            <button type={"submit"} className="CreateProject__submit">create</button>
+                            <button disabled={!formIsValid} type={"submit"} className="CreateProject__submit">create</button>
                         </div>
                     </div>
                 </form>

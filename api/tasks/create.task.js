@@ -5,13 +5,14 @@ module.exports = app => {
     app.post('/create-task', auth, (req, res) => {
          const todo = req.body;
          const user_id = req.user;
-        connection.query('INSERT INTO todos (title, text, day, user_id, project) VALUES (?, ?, ?, ?, ?)',
-            [todo.title, todo.text, todo.day, user_id, todo.project],
+        console.log(user_id);
+        connection.query('INSERT INTO todos (title, text, day, user_id, project, category) VALUES (?, ?, ?, ?, ?, ?)',
+            [todo.title, todo.text, todo.day, user_id, todo.project, todo.category],
             (insertTodoError, insertTodoRes) => {
                 if (insertTodoError) {
                     res.status(500).json({error: {type: 'server', msg: 'SOMETHING WENT WRONG WITH THE SERVER!'}});
                 } else if(todo.project) {
-                    connection.query('INSERT INTO projects_todos (project_id, todo_id) VALUES (?, ?)', [todo.project_id, insertTodoRes.insertId], (insertTodoProjectError, insertTodoProjectRes) => {
+                    connection.query('INSERT INTO projects_todos (project_id, todo_id, user_id) VALUES (?, ?, ?)', [todo.project_id, insertTodoRes.insertId, user_id], (insertTodoProjectError, insertTodoProjectRes) => {
                         if(insertTodoProjectError) {
                             res.status(500).json({error: {type: 'server', msg: 'SOMETHING WENT WRONG WITH THE SERVER!'}});
                         }else {
@@ -22,7 +23,8 @@ module.exports = app => {
                                 day: todo.day,
                                 user_id,
                                 project: todo.project,
-                                project_id: todo.project_id
+                                project_id: todo.project_id,
+                                category: todo.category
                             }
                             res.status(200).json({todoData});
                         }
@@ -35,9 +37,9 @@ module.exports = app => {
                         day: todo.day,
                         user_id,
                         project: todo.project,
-                        project_id: todo.project_id
+                        project_id: todo.project_id,
+                        category: todo.category
                     }
-
                     res.status(200).json({todoData});
                 }
             });
