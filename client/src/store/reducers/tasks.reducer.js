@@ -90,6 +90,15 @@ export default (state = initialState, action) => {
                 ...state,
                 projects: otherProjects
             }
+        case actionTypes.CHANGE_TASK_CATEGORY_SUCCESS:
+            let changedTask = state.tasks.filter(t => t.id == action.newTask.id)[0];
+            changedTask = action.newTask;
+            const unChangedTasks = state.tasks.filter(t => t.id != action.newTask.id);
+
+            return {
+                ...state,
+                tasks: [changedTask, ...unChangedTasks]
+            }
         default:
             return state;
     }

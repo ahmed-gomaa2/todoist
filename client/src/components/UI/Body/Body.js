@@ -9,6 +9,8 @@ import Section from "./Section/Section";
 
 const Body = props => {
     const [header, setHeader] = useState('');
+    const [changedCategory, setChangedCategory] = useState(null);
+
     const params = useParams();
     useEffect(() => {
         if(props.currentProject) {
@@ -29,7 +31,7 @@ const Body = props => {
                 <div className="Body__sections">
                     <div className="Body__sections-container">
                         {['todo', 'inProgress', 'completed'].map(s => (
-                            <Section formState={props.formState} category={s} toggleCreateTask={props.toggleCreateTask} tasks={props.tasks.filter(t => t.category === s)} />
+                            <Section changedCategory={changedCategory} setChangedCategory={setChangedCategory} formState={props.formState} category={s} toggleCreateTask={props.toggleCreateTask} tasks={props.tasks.filter(t => t.category === s)} />
                         ))}
                     </div>
                 </div>

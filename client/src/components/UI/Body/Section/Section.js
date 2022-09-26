@@ -34,6 +34,8 @@ const Section = (props) => {
         setFormToggle(false);
     }
 
+
+
     const formChangeHandler = e => {
         // const input = e.target.closest('.CreateTask__form-input');
         // console.log(e.target)
@@ -68,8 +70,13 @@ const Section = (props) => {
 
         setFormToggle(false);
     }
+
+    const dragEnter = e => {
+        console.log(props.category)
+        props.setChangedCategory(props.category)
+    }
     return (
-        <div className="Section">
+        <div onDragEnter={e => dragEnter(e)} className="Section">
             <div className="Section-header">
                 <p>{props.category}</p>
                 <p><span>{props.tasks.length}</span></p>
@@ -81,7 +88,7 @@ const Section = (props) => {
             <div className="Section-body">
                 <div className="Section__tasks-container">
                     {props.tasks.map(t => (
-                        <Task t={t} />
+                        <Task changedCategory={props.changedCategory} t={t} />
                     ))}
                 </div>
             </div>

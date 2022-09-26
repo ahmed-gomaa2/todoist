@@ -10,7 +10,15 @@
     /*box-shadow: 0 0 20px #C8C8C8;*/
     margin-bottom: 20px;
     word-break: break-word;
-    border: 1px solid lightgray;
+    border: 1px solid black;
+}
+
+.Task__completed {
+    background: rgba(0, 255, 0, 0.1);
+}
+
+.Task__inProgress {
+    background: rgba(200, 0, 255, .1);
 }
 
 .Task__header {

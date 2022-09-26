@@ -1,5 +1,6 @@
 import axios from 'axios';
 import {
+    CHANGE_TASK_CATEGORY__FAIL, CHANGE_TASK_CATEGORY_SUCCESS,
     CREATE_NEW_TASK_FAIL,
     CREATE_NEW_TASK_SUCCESS,
     CREATE_PROJECT_FAIL,
@@ -190,6 +191,27 @@ export const editProject = projectData => async dispatch => {
     }catch (e) {
         dispatch({
             type: EDIT_PROJECT_FAIL,
+        })
+    }
+}
+
+export const changeCategory = (task, category) => async dispatch => {
+    try{
+        console.log(category);
+        const body = {
+            task: task,
+            newCategory: category
+        }
+        const newTask = await axios.put('/server/change-category', body);
+
+        dispatch({
+            type: CHANGE_TASK_CATEGORY_SUCCESS,
+            newTask: newTask.data
+        })
+    }catch (e) {
+        console.log(e);
+        dispatch({
+            type: CHANGE_TASK_CATEGORY__FAIL
         })
     }
 }

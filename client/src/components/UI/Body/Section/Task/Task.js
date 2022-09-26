@@ -1,6 +1,6 @@
 import React, {useEffect, useRef, useState} from 'react';
 import {connect} from "react-redux";
-import {deleteTask, editTask} from "../../../../../store/actions/tasks.actions";
+import {deleteTask, editTask, changeCategory} from "../../../../../store/actions/tasks.actions";
 import CreateTask from "../../../../CreateTask/CreateTask";
 import inputChangeHandlerHelper from "../../../../../utls/input.change.handler";
 import {useParams} from "react-router-dom";
@@ -79,8 +79,29 @@ const Task = props => {
 
         setEditing(false);
     }
+
+    const dragItem = useRef();
+    const dragOverItem = useRef();
+
+    const dragStart = (e, position) => {
+        dragItem.current = position;
+        console.log(dragItem.current, e.target.innerHTML);
+    }
+
+    const onDragEnd = e => {
+        console.log(props.t.category, props.changedCategory)
+        if(props.t.category === props.changedCategory) return;
+        console.log('Hi there')
+        props.changeCategory(props.t, props.changedCategory)
+    }
+
     return (
-        <div key={props.t.id} className="Task">
+        <div
+            draggable
+            onDragStart={e => dragStart(e, props.t)}
+            onDragEnd={e => onDragEnd(e)}
+            key={props.t.id}
+            className={`Task ${props.t.category === 'completed' ? 'Task__completed' : null} ${props.t.category === 'inProgress' ? 'Task__inProgress' : null}`}>
             {editing ? (
                 <CreateTask formIsValid={formIsValid} formSubmitHandler={formSubmitHandler} formChangeHandler={formChangeHandler} setFormIsValid={setFormIsValid} setForm={setForm} form={form} closeForm={closeForm} category={props.t.category} date={new Date()} />
             ) : (
@@ -117,4 +138,4 @@ const Task = props => {
     );
 };
 
-export default connect(null, {deleteTask, editTask}) (Task);
+export default connect(null, {deleteTask, editTask, changeCategory}) (Task);
