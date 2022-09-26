@@ -19,7 +19,20 @@ module.exports = app => {
         const project_id = req.params.project_id;
         const user_id = req.user;
 
-        connection.query('DELETE FROM projects WHERE user_id = ? AND id = ?', [user_id, project_id], (deleteProjectError, deleteProjectRes) => {
+        connection.query(
+            'DELETE projects_todos, todos, projects ' +
+            'FROM ' +
+            'projects_todos ' +
+            'INNER JOIN todos ' +
+            'ON ' +
+            'projects_todos.todo_id = todos.id ' +
+            'INNER JOIN projects ' +
+            'ON ' +
+            'projects_todos.project_id = projects.id ' +
+            'WHERE ' +
+            'project_id = ?',
+            [project_id],
+            (deleteProjectError, deleteProjectRes) => {
             if (deleteProjectError) {
                 res.status(500).json({error: {type: 'server', msg: 'SOMETHING WENT WRONG WITH THE SERVER!'}})
             } else {

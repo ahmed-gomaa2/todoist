@@ -36,6 +36,20 @@ const CreateProject = props => {
 
         props.createProject(projectData, navigate);
 
+        setForm({
+            name: {
+                validation: {
+                    required: true,
+                    maxLength: 15
+                },
+                value: '',
+                valid: false,
+                touched: false
+            }
+        });
+
+        setFormIsValid(false);
+
         props.toggleCreateProject();
     }
     return (

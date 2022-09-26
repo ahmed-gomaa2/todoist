@@ -84,15 +84,14 @@ const Task = props => {
     const dragOverItem = useRef();
 
     const dragStart = (e, position) => {
-        dragItem.current = position;
-        console.log(dragItem.current, e.target.innerHTML);
+        dragItem.current = e.target;
+        dragItem.current.classList.add('Task__dragged');
     }
 
     const onDragEnd = e => {
-        console.log(props.t.category, props.changedCategory)
+        dragItem.current.classList.remove('Task__dragged');
         if(props.t.category === props.changedCategory) return;
-        console.log('Hi there')
-        props.changeCategory(props.t, props.changedCategory)
+        props.changeCategory(props.t, props.changedCategory);
     }
 
     return (
