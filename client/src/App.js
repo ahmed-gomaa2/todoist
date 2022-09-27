@@ -14,7 +14,6 @@ import Body from "./components/UI/Body/Body";
 import Week from "./components/UI/Week/Week";
 
 function App(props) {
-
     useEffect(() => {
         props.loadUser();
     }, []);
@@ -22,13 +21,16 @@ function App(props) {
     return (
         <div className="App">
             {props.loadingUser ? (
+                    //if It's still loading render the spinner
                     <Spinner/>
                 ): <Routes>
                     <Route path={'/'} exact element={
+                        //protecting the Route if the user is not logged in.
                         <ProtectedRoute isAuthenticated={props.isAuthenticated} route={'/landing'}>
                             <Home history={props.history}/>
                         </ProtectedRoute>
                     }>
+                        //Rendering sub routes for the route '/'.
                         <Route path={'/dashboard/today'} exact element={<Body history={props.history}/>} />
                         <Route path={'/dashboard/week'} exact element={<Week />} />
                         <Route path={'/dashboard/projects/:id'} exact element={<Body history={props.history} />}/>
@@ -67,6 +69,7 @@ function App(props) {
     );
 }
 
+//Fetching data from the redux store.
 const mapStateToProps = state => {
     return {
         state: state,

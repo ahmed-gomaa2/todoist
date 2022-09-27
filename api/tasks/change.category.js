@@ -6,7 +6,6 @@ module.exports = app => {
         const user_id = req.user;
         const {task} = req.body;
 
-        console.log(req.body);
 
         connection.query('SELECT * FROM todos WHERE user_id = ? AND id = ?', [user_id, task.id], (findTaskError, findTaskRes) => {
             if(findTaskError) {

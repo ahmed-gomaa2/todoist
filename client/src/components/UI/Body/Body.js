@@ -3,13 +3,15 @@ import './Body.css';
 import CreateTask from "../../CreateTask/CreateTask";
 import {toggleCreateTask} from "../../../store/actions/ui.actions";
 import {connect} from "react-redux";
-import {setCurrentProject} from "../../../store/actions/tasks.actions";
+import {setCurrentProject, changeCategory, removeTaskFromUI, addTaskToUI} from "../../../store/actions/tasks.actions";
 import {useParams} from "react-router-dom";
 import Section from "./Section/Section";
+import {DragDropContext} from "react-beautiful-dnd";
 
 const Body = props => {
     const [header, setHeader] = useState('');
     const [changedCategory, setChangedCategory] = useState(null);
+    const [draggedTask, setDraggedTask] = useState(null);
 
     const params = useParams();
     useEffect(() => {
@@ -19,6 +21,16 @@ const Body = props => {
             setHeader('Today')
         }
     },[props.currentProject]);
+
+    const onDragEnd = value => {
+        const {destination} = value;
+        if(!destination) return;
+        const task = props.tasks.filter(t => t.id === +value.draggableId)[0];
+        if(value.source.droppableId === value.destination.droppableId) return;
+        props.removeTaskFromUI(task);
+        props.addTaskToUI(task, value.destination.droppableId);
+        props.changeCategory(task, value.destination.droppableId);
+    }
 
     return (
         <div className={'Body'}>
@@ -30,9 +42,13 @@ const Body = props => {
                 </div>
                 <div className="Body__sections">
                     <div className="Body__sections-container">
+                        <DragDropContext
+                            onDragEnd={onDragEnd}
+                        >
                         {['todo', 'inProgress', 'completed'].map(s => (
-                            <Section changedCategory={changedCategory} setChangedCategory={setChangedCategory} formState={props.formState} category={s} toggleCreateTask={props.toggleCreateTask} tasks={props.tasks.filter(t => t.category === s)} />
+                            <Section key={s} changedCategory={changedCategory} setChangedCategory={setChangedCategory} formState={props.formState} category={s} toggleCreateTask={props.toggleCreateTask} tasks={props.tasks.filter(t => t.category === s)} />
                         ))}
+                        </DragDropContext>
                     </div>
                 </div>
             </div>
@@ -50,4 +66,4 @@ const mapStateToProps = state => {
     }
 }
 
-export default connect(mapStateToProps, {toggleCreateTask, setCurrentProject}) (Body);
+export default connect(mapStateToProps, {addTaskToUI, removeTaskFromUI, toggleCreateTask, setCurrentProject, changeCategory}) (Body);

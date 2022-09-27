@@ -99,6 +99,18 @@ export default (state = initialState, action) => {
                 ...state,
                 tasks: [changedTask, ...unChangedTasks]
             }
+        case actionTypes.REMOVE_TASK_FROM_UI_SUCCESS:
+            const remainTasks = state.tasks.filter(t => t.id !== action.task.id);
+            return {
+                ...state,
+                tasks: remainTasks
+            }
+        case actionTypes.ADD_TASK_TO_UI_SUCCESS:
+            action.task.category = action.newCategory;
+            return {
+                ...state,
+                tasks: [...state.tasks, action.task]
+            }
         default:
             return state;
     }

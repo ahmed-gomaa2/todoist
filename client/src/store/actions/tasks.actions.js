@@ -1,5 +1,6 @@
 import axios from 'axios';
 import {
+    ADD_TASK_TO_UI_SUCCESS,
     CHANGE_TASK_CATEGORY__FAIL, CHANGE_TASK_CATEGORY_SUCCESS,
     CREATE_NEW_TASK_FAIL,
     CREATE_NEW_TASK_SUCCESS,
@@ -15,7 +16,7 @@ import {
     GET_PROJECT_TASKS_FAIL,
     GET_PROJECT_TASKS_SUCCESS,
     GET_PROJECTS_FAIL,
-    GET_PROJECTS_SUCCESS,
+    GET_PROJECTS_SUCCESS, REMOVE_TASK_FROM_UI_SUCCESS,
     SET_CURRENT_PROJECT_FAIL,
     SET_CURRENT_PROJECT_SUCCESS,
     START_SETTING_CURRENT_PROJECT
@@ -198,17 +199,16 @@ export const editProject = projectData => async dispatch => {
 
 export const changeCategory = (task, category) => async dispatch => {
     try{
-        console.log(category);
         const body = {
             task: task,
             newCategory: category
         }
         const newTask = await axios.put('/server/change-category', body);
 
-        dispatch({
-            type: CHANGE_TASK_CATEGORY_SUCCESS,
-            newTask: newTask.data
-        })
+        // dispatch({
+        //     type: CHANGE_TASK_CATEGORY_SUCCESS,
+        //     newTask: newTask.data
+        // })
     }catch (e) {
         console.log(e);
         dispatch({
@@ -217,8 +217,19 @@ export const changeCategory = (task, category) => async dispatch => {
     }
 }
 
+export const removeTaskFromUI = (task) => {
+    return {
+        type: REMOVE_TASK_FROM_UI_SUCCESS,
+        task: task
+    }
+}
 
-
-
+export const addTaskToUI = (task, newCategory) => {
+    return {
+        type: ADD_TASK_TO_UI_SUCCESS,
+        task,
+        newCategory
+    }
+}
 
 

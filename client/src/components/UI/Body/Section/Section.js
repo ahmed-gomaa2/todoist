@@ -6,6 +6,9 @@ import {createNewTask} from "../../../../store/actions/tasks.actions";
 import {connect} from "react-redux";
 import {useParams} from "react-router-dom";
 import './Section.css'
+import {DragDropContext, Draggable, Droppable} from "react-beautiful-dnd";
+import TaskDnd from "./TaskDnd/TaskDnd";
+
 
 const Section = (props) => {
     const [formToggle, setFormToggle] = useState(false);
@@ -81,26 +84,42 @@ const Section = (props) => {
         console.log(props.category)
         props.setChangedCategory(props.category)
     }
+
+
     return (
-        <div onDragOver={e => dragEnter(e)} onTouchMove={e => dragTouchMove(e)} className="Section">
-            <div className="Section-header">
-                <p>{props.category}</p>
-                <p>
-                    <span>{props.tasks.length}</span>
-                </p>
-            </div>
-            <div className="Section-add-task">
-                <i onClick={e => setFormToggle(!formToggle)} className="fa-solid fa-plus"></i>
-                {formToggle && <CreateTask formIsValid={formIsValid} formSubmitHandler={formSubmitHandler} formChangeHandler={formChangeHandler} setFormIsValid={setFormIsValid} setForm={setForm} form={form} closeForm={closeForm} category={props.category} date={new Date()} />}
-            </div>
-            <div className="Section-body">
-                <div className="Section__tasks-container">
-                    {props.tasks.map(t => (
-                        <Task setDragging={setDragging} changedCategory={props.changedCategory} t={t} />
-                    ))}
+                <div
+                    className="Section"
+                >
+                    <div className="Section-header">
+                        <p>{props.category}</p>
+                        <p>
+                            <span>{props.tasks.length}</span>
+                        </p>
+                    </div>
+                    <div className="Section-add-task">
+                        <i onClick={e => setFormToggle(!formToggle)} className="fa-solid fa-plus"></i>
+                        {formToggle && <CreateTask formIsValid={formIsValid} formSubmitHandler={formSubmitHandler} formChangeHandler={formChangeHandler} setFormIsValid={setFormIsValid} setForm={setForm} form={form} closeForm={closeForm} category={props.category} date={new Date()} />}
+                    </div>
+                    <div className="Section-body">
+                        <Droppable
+                            type={'TASK'}
+                            droppableId={props.category}
+                        >
+                            {(provided, snapshot) => (
+                                <div
+                                    {...provided.droppableProps}
+                                    ref={provided.innerRef}
+                                    className="Section__tasks-container"
+                                >
+                                    {props.tasks.map((t, index) => (
+                                        <TaskDnd t={t} index={index} key={t.id} />
+                                    ))}
+                                    {provided.placeholder}
+                                </div>
+                            )}
+                        </Droppable>
+                    </div>
                 </div>
-            </div>
-        </div>
     );
 };
 

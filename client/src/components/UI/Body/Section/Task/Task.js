@@ -80,6 +80,8 @@ const Task = props => {
         e.target.style.opacity ='1';
         dragItem.current = e.target;
         dragItem.current.classList.add('Task__dragged');
+        e.dataTransfer.effectAllowed = "copy";
+
     }
 
     const onDragEnd = e => {
