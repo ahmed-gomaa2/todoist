@@ -150,13 +150,14 @@ export const deleteTask = taskId => async dispatch => {
     }
 }
 
-export const deleteProject = (project_id, navigate) => async dispatch => {
+export const deleteProject = (project_id, navigate, isProject) => async dispatch => {
     try {
         const projectId = await axios.delete('/server/delete-project/' + project_id);
         dispatch({
             type: DELETE_PROJECT_SUCCESS,
             projectId: projectId.data
         });
+        if(isProject) return;
         navigate('/dashboard/today');
     }catch (e) {
         dispatch({

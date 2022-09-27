@@ -50,13 +50,6 @@ const Task = props => {
     }
 
     const formChangeHandler = e => {
-        // const input = e.target.closest('.CreateTask__form-input');
-        // console.log(e.target)
-        // if(!input) return;
-        // const formDataCopy = {...formData};
-        // formDataCopy[input.name] = e.target.value;
-        //
-        // setFormData(formDataCopy);
         console.log(inputChangeHandlerHelper);
         const {formIsValid, updatedFormData} = inputChangeHandlerHelper(e, form, 'CreateTask__form-input');
         setForm(updatedFormData);
@@ -84,13 +77,14 @@ const Task = props => {
     const dragOverItem = useRef();
 
     const dragStart = (e, position) => {
+        e.target.style.opacity ='1';
         dragItem.current = e.target;
         dragItem.current.classList.add('Task__dragged');
     }
 
     const onDragEnd = e => {
         dragItem.current.classList.remove('Task__dragged');
-        if(props.t.category === props.changedCategory) return;
+        if(props.t.category === props.changedCategory && props.changedCategory) return;
         props.changeCategory(props.t, props.changedCategory);
     }
 
@@ -98,6 +92,8 @@ const Task = props => {
         <div
             draggable
             onDragStart={e => dragStart(e, props.t)}
+            onTouchStart={e => dragStart(e, props.t)}
+            onTouchEnd={e => onDragEnd(e)}
             onDragEnd={e => onDragEnd(e)}
             key={props.t.id}
             className={`Task ${props.t.category === 'completed' ? 'Task__completed' : null} ${props.t.category === 'inProgress' ? 'Task__inProgress' : null}`}>
@@ -117,14 +113,25 @@ const Task = props => {
                             <div ref={dropdownRef} className={`Task__dropdown ${dropdown ? 'Task__dropdown-open' : null}`}>
                                 <div className="Task__dropdown-links">
                                     <ul className="Task__dropdown-items">
-                                        <li onClick={e => {
-                                            setDropdown(false);
-                                            setEditing(true);
-                                        }} className="Task__dropdown-item Task__dropdown-edit"><i className="fa-solid fa-pen"></i><p>edit</p></li>
-                                        <li onClick={e => {
-                                            setDropdown(false)
-                                            props.deleteTask(props.t.id)
-                                        }} className="Task__dropdown-item Task__dropdown-delete"><i className="fa-regular fa-trash-can"></i><p>Delete task</p></li>
+                                        <li
+                                            onClick={e => {
+                                                setDropdown(false);
+                                                setEditing(true);
+                                            }}
+                                            className="Task__dropdown-item Task__dropdown-edit"
+                                        >
+                                            <i className="fa-solid fa-pen"></i>
+                                            <p>edit</p>
+                                        </li>
+                                        <li
+                                            onClick={e => {
+                                                setDropdown(false)
+                                                props.deleteTask(props.t.id)
+                                            }}
+                                            className="Task__dropdown-item Task__dropdown-delete">
+                                            <i className="fa-regular fa-trash-can"></i>
+                                            <p>Delete task</p>
+                                        </li>
                                     </ul>
                                 </div>
                             </div>

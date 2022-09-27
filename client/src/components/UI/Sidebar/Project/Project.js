@@ -1,5 +1,5 @@
 import React, {useEffect, useRef, useState} from 'react';
-import {NavLink, useNavigate} from "react-router-dom";
+import {NavLink, useNavigate, useParams} from "react-router-dom";
 import './Project.css';
 import {connect} from "react-redux";
 import {deleteProject} from "../../../../store/actions/tasks.actions";
@@ -11,6 +11,7 @@ const Project = props => {
 
     const dropdownRef = useRef();
     const navigate = useNavigate();
+    const params = useParams();
 
     useEffect(() => {
         const refRect = dropdownRef.current.getBoundingClientRect();
@@ -56,8 +57,9 @@ const Project = props => {
                             </div>
                             <div onClick={e => {
                                 // e.stopPropagation();
+                                const isProject = !params.id;
                                 setDropdown(false);
-                                props.deleteProject(props.p.id, navigate)
+                                props.deleteProject(props.p.id, navigate, isProject)
                             }} className="Sidebar__project-dropdown--item Sidebar__project-dropdown-delete">
                                 <i className="fa-solid fa-trash"></i>
                                 <p>Delete</p>

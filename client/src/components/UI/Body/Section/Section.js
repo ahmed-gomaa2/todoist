@@ -28,6 +28,7 @@ const Section = (props) => {
         }
     });
     const [formIsValid, setFormIsValid] = useState(false);
+    const [dragging, setDragging] = useState(false);
     const params = useParams();
 
     const closeForm = e => {
@@ -71,15 +72,22 @@ const Section = (props) => {
         setFormToggle(false);
     }
 
+    const dragTouchMove = e =>{
+
+    }
+
     const dragEnter = e => {
+        // e.preventDefault();
         console.log(props.category)
         props.setChangedCategory(props.category)
     }
     return (
-        <div onDragEnter={e => dragEnter(e)} className="Section">
+        <div onDragOver={e => dragEnter(e)} onTouchMove={e => dragTouchMove(e)} className="Section">
             <div className="Section-header">
                 <p>{props.category}</p>
-                <p><span>{props.tasks.length}</span></p>
+                <p>
+                    <span>{props.tasks.length}</span>
+                </p>
             </div>
             <div className="Section-add-task">
                 <i onClick={e => setFormToggle(!formToggle)} className="fa-solid fa-plus"></i>
@@ -88,7 +96,7 @@ const Section = (props) => {
             <div className="Section-body">
                 <div className="Section__tasks-container">
                     {props.tasks.map(t => (
-                        <Task changedCategory={props.changedCategory} t={t} />
+                        <Task setDragging={setDragging} changedCategory={props.changedCategory} t={t} />
                     ))}
                 </div>
             </div>

@@ -15,7 +15,7 @@ const Sidebar = (props) => {
     const linksClickHandler = e => {
         const link = e.target.closest('a');
         if(!link) return;
-        props.toggleSidebar();
+        // props.toggleSidebar();
     }
 
     const projectClickHandler = (e, p) => {

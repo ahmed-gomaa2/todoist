@@ -14,6 +14,7 @@ const Home = (props) => {
             props.getAllTasks();
             navigate('/dashboard/today');
         }else {
+            if(props.currentProject?.id == params.id) return;
             props.setCurrentProject(params.id);
         }
     }, [params.id]);
@@ -26,7 +27,8 @@ const Home = (props) => {
 
 const mapStateToProps = state => {
     return {
-        projects: state.tasks.projects
+        projects: state.tasks.projects,
+        currentProject: state.tasks.currentProject
     }
 }
 
