@@ -7,6 +7,7 @@ import {setCurrentProject, changeCategory, removeTaskFromUI, addTaskToUI} from "
 import {useParams} from "react-router-dom";
 import Section from "./Section/Section";
 import {DragDropContext} from "react-beautiful-dnd";
+import Header from "../../Upcoming/Header/Header";
 
 const Body = props => {
     const [header, setHeader] = useState('');
@@ -18,7 +19,7 @@ const Body = props => {
         if(props.currentProject) {
             setHeader(props.currentProject.name);
         }else {
-            setHeader('Today')
+            setHeader(props.header);
         }
     },[props.currentProject]);
 
@@ -32,22 +33,23 @@ const Body = props => {
         props.changeCategory(task, value.destination.droppableId);
     }
 
+    const onDragStart = value => {
+        setDraggedTask(value.draggableId);
+    }
+
     return (
         <div className={'Body'}>
             <div className="Body__container">
-                <div className="Body__header">
-                    <p className="Body__title">
-                        {header}
-                    </p>
-                </div>
+                <Header header={header} />
                 <div className="Body__sections">
                     <div className="Body__sections-container">
                         <DragDropContext
                             onDragEnd={onDragEnd}
+                            onDragStart={onDragStart}
                         >
-                        {['todo', 'inProgress', 'completed'].map(s => (
-                            <Section key={s} changedCategory={changedCategory} setChangedCategory={setChangedCategory} formState={props.formState} category={s} toggleCreateTask={props.toggleCreateTask} tasks={props.tasks.filter(t => t.category === s)} />
-                        ))}
+                            {['todo', 'inProgress', 'completed'].map(s => (
+                                <Section draggedTask={draggedTask} key={s} changedCategory={changedCategory} setChangedCategory={setChangedCategory} formState={props.formState} category={s} toggleCreateTask={props.toggleCreateTask} tasks={props.tasks.filter(t => t.category === s)} />
+                            ))}
                         </DragDropContext>
                     </div>
                 </div>

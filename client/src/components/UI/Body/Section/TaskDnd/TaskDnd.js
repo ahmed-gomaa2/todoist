@@ -82,7 +82,12 @@ const TaskDnd = props => {
         dragItem.current.classList.add('Task__dragged');
     }
 
+    useEffect(() => {
+        const taskDay = new Date(props.t.create_at).getDate();
+        const taskYear = new Date(props.t.create_at).getFullYear();
+        const taskMonth = new Date(props.t.create_at).getMonth();
 
+    }, []);
 
     return (
         <Draggable
@@ -90,18 +95,20 @@ const TaskDnd = props => {
             index={props.index}
             type={'TASK'}
         >
-            {(provided) => (
+            {(provided, snapshot) => (
                 <div
                     ref={provided.innerRef}
                     {...provided.draggableProps}
                     {...provided.dragHandleProps}
-                    className={`Task ${props.t.category === 'completed' ? 'Task__completed' : null} ${props.t.category === 'inProgress' ? 'Task__inProgress' : null}`}>
+                    className={`Task ${new Date(props.t.create_at).getTime() < new Date().getTime() - 86400000 ? 'Task__overdue' : null} ${props.t.category === 'completed' ? 'Task__completed' : null} ${props.t.category === 'inProgress' ? 'Task__inProgress' : null}`}
+                    style={{backgroundColor: snapshot.isDragging && 'rgba(255, 255, 0, 1)', transform: `rotate(15deg) `, ...provided.draggableProps.style}}
+                >
                     {editing ? (
                         <CreateTask formIsValid={formIsValid} formSubmitHandler={formSubmitHandler} formChangeHandler={formChangeHandler} setFormIsValid={setFormIsValid} setForm={setForm} form={form} closeForm={closeForm} category={props.t.category} date={new Date()} />
                     ) : (
                         <>
                             <div className="Task__header">
-                                <p>{props.t.title}</p>
+                                <p>{props.t.title} {(new Date(props.t.create_at).getTime() < new Date().getTime() - 86400000 && props.t.category !== 'completed') ? <span>overdue</span> : null}</p>
                                 <div className="Task__dots-container">
                                     <div onClick={e => setDropdown(!dropdown)} className="Task__dots">
                                         <div></div>

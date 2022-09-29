@@ -59,7 +59,7 @@ const Login = (props) => {
                 el.style.opacity = 1;
                 el.style.transform = 'translateY(0)';
             })
-        }, 400);
+        }, 200);
     }, []);
     return (
         <div className={'Login'}>

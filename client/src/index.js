@@ -6,7 +6,10 @@ import {unstable_HistoryRouter as HistoryRouter} from "react-router-dom";
 import {createBrowserHistory} from 'history';
 import {Provider} from "react-redux";
 import configureStore from './store';
-import reducer from './store/reducers'
+import reducer from './store/reducers';
+// import 'bootstrap/dist/css/bootstrap.min.css';
+// import 'bootstrap/dist/js/bootstrap.bundle.min';
+//
 
 const history = createBrowserHistory({window})
 const store = configureStore(reducer);

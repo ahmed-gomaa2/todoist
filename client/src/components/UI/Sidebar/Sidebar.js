@@ -42,9 +42,9 @@ const Sidebar = (props) => {
                             </NavLink>
                         </li>
                         <li className="Sidebar__link">
-                            <NavLink className={navData => navData.isActive ? 'Sidebar__link-active' : null} to={'/dashboard/week'}>
+                            <NavLink className={navData => navData.isActive ? 'Sidebar__link-active' : null} to={'/dashboard/upcoming'}>
                                 <i className="fa-brands fa-weebly"></i>
-                                <p>Week</p>
+                                <p>Upcoming</p>
                             </NavLink>
                         </li>
                         {/*<li className="Sidebar__link">*/}

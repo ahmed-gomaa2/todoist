@@ -11,7 +11,8 @@ import ProtectedRoute from "./components/HOC/ProtectedRoute";
 import Layout from "./components/HOC/Layout/Layout";
 import Landing from './screens/Landing/Landing';
 import Body from "./components/UI/Body/Body";
-import Week from "./components/UI/Week/Week";
+import Upcomming from "./components/Upcoming/Upcomming";
+import Upcoming from "./components/Upcoming/Upcomming";
 
 function App(props) {
     useEffect(() => {
@@ -31,8 +32,8 @@ function App(props) {
                         </ProtectedRoute>
                     }>
                         //Rendering sub routes for the route '/'.
-                        <Route path={'/dashboard/today'} exact element={<Body history={props.history}/>} />
-                        <Route path={'/dashboard/week'} exact element={<Week />} />
+                        <Route path={'/dashboard/today'} exact element={<Body header={'Today'} history={props.history}/>} />
+                        <Route path={'/dashboard/upcoming'} exact element={<Upcoming />} />
                         <Route path={'/dashboard/projects/:id'} exact element={<Body history={props.history} />}/>
                     </Route>
 

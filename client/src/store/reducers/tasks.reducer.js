@@ -5,7 +5,8 @@ const initialState = {
     projects: [],
     currentProject: null,
     tasks: [],
-    settingCurrentProject: true
+    settingCurrentProject: true,
+    gettingTasks: true
 }
 
 export default (state = initialState, action) => {
@@ -110,6 +111,16 @@ export default (state = initialState, action) => {
             return {
                 ...state,
                 tasks: [...state.tasks, action.task]
+            }
+        case actionTypes.GETTING_TASKS_START:
+            return {
+                ...state,
+                gettingTasks: true
+            }
+        case actionTypes.GETTING_TASKS_END:
+            return {
+                ...state,
+                gettingTasks: false
             }
         default:
             return state;

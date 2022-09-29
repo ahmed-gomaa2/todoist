@@ -14,8 +14,19 @@
     background: white;
 }
 
+.Task__header span {
+    font-size: 10px;
+    color: red;
+
+}
+
+.Task__overdue {
+    background: yellow !important;
+}
+
 .Task__completed {
-    background: rgba(0, 255, 0, 0.1);
+    background: rgba(0, 255, 0, 0.1) !important;
+    opacity: 0.5 !important;
 }
 
 .Task__inProgress {
@@ -23,9 +34,7 @@
 }
 
 .Task__dragged {
-    background: rgba(255, 255,0, 0.5);
-    opacity: 1;
-    z-index: 10000;
+    transform: rotate(15deg);
 }
 
 .Task__header {

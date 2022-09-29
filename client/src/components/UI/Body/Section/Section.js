@@ -112,7 +112,7 @@ const Section = (props) => {
                                     className="Section__tasks-container"
                                 >
                                     {props.tasks.map((t, index) => (
-                                        <TaskDnd t={t} index={index} key={t.id} />
+                                        <TaskDnd draggedTask={props.draggedTask} t={t} index={index} key={t.id} />
                                     ))}
                                     {provided.placeholder}
                                 </div>

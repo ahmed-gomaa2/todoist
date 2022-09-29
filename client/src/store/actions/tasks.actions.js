@@ -16,7 +16,7 @@ import {
     GET_PROJECT_TASKS_FAIL,
     GET_PROJECT_TASKS_SUCCESS,
     GET_PROJECTS_FAIL,
-    GET_PROJECTS_SUCCESS, REMOVE_TASK_FROM_UI_SUCCESS,
+    GET_PROJECTS_SUCCESS, GETTING_TASKS_END, GETTING_TASKS_START, REMOVE_TASK_FROM_UI_SUCCESS,
     SET_CURRENT_PROJECT_FAIL,
     SET_CURRENT_PROJECT_SUCCESS,
     START_SETTING_CURRENT_PROJECT
@@ -91,11 +91,13 @@ export const setCurrentProject = (project_id) => async dispatch => {
 
 export const getProjectTasks = project_id => async dispatch => {
     try{
+        dispatch(gettingTasksStart());
         const tasks = await axios.get('/server/projects/' + project_id);
         dispatch({
             type: GET_PROJECT_TASKS_SUCCESS,
             tasks: tasks.data
         });
+        dispatch(gettingTasksEnd());
     }catch (e) {
         dispatch({
             type: GET_PROJECT_TASKS_FAIL,
@@ -106,12 +108,14 @@ export const getProjectTasks = project_id => async dispatch => {
 
 export const getAllTasks = () => async dispatch => {
     try{
+        dispatch(gettingTasksStart());
         const tasks = await axios.get('/server/all-tasks');
 
         dispatch({
             type: GET_ALL_TASKS_SUCCESS,
             tasks: tasks.data
-        })
+        });
+        dispatch(gettingTasksEnd())
     }catch (e) {
         dispatch({
             type: GET_ALL_TASKS_FAIL,
@@ -232,4 +236,14 @@ export const addTaskToUI = (task, newCategory) => {
     }
 }
 
+export const gettingTasksStart = () => {
+    return {
+        type: GETTING_TASKS_START
+    }
+}
 
+export const gettingTasksEnd = () => {
+    return {
+        type: GETTING_TASKS_END
+    }
+}

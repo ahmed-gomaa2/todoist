@@ -165,6 +165,7 @@
 
 .Sidebar__projects-ul {
     display: none;
+    list-style: none;
 }
 
 .Sidebar__projects-ul-active {

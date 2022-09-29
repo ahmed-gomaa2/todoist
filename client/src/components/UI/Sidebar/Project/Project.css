@@ -6,6 +6,14 @@
     position: relative;
 }
 
+li::before {
+    content: "\2022";
+    color: greenyellow;
+    display: inline-block;
+    width: 1em;
+    margin-left: -1em;
+}
+
 .Sidebar__project a {
     display: flex;
     align-items: center;

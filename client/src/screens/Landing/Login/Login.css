@@ -1,5 +1,7 @@
 .Login {
     width: 100%;
+    max-width: 600px;
+    margin: 0 auto;
     /*height: 100%;*/
     /*display: flex;*/
     /*align-items: center;*/
@@ -99,3 +101,10 @@
     opacity: 0;
     transform: translateY(20px);
 }
+
+/*@media(min-width: 700px) {*/
+/*    .Login {*/
+/*        width: 70%;*/
+/*        margin: 0 auto;*/
+/*    }*/
+/*}*/

@@ -12,8 +12,13 @@ const Home = (props) => {
     useEffect(() => {
         if(!params.id) {
             props.getAllTasks();
-            navigate('/dashboard/today');
+            console.log(window.location);
+            if(window.location.pathname.length < 2) {
+                navigate('/dashboard/today');
+                console.log('no pathname')
+            }
         }else {
+            console.log(params);
             if(props.currentProject?.id == params.id) return;
             props.setCurrentProject(params.id);
         }

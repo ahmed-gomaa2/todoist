@@ -6,6 +6,7 @@ import Toolbar from "../../../components/UI/Toolbar/Toolbar";
 import {connect} from "react-redux";
 import {toggleSidebar} from "../../../store/actions/ui.actions";
 import {getAllTasks} from "../../../store/actions/tasks.actions";
+import Spinner from "../../../components/UI/Spinner/Spinner";
 
 const Dashboard = props => {
     const params = useParams();
@@ -40,7 +41,11 @@ const Dashboard = props => {
                 <div className="Dashboard__body">
                     <div className={`Dashboard__body-container`}>
                         <Toolbar />
-                        <Outlet />
+                        {props.gettingTasks ? (
+                            <Spinner />
+                        ) : (
+                            <Outlet />
+                        )}
                     </div>
                 </div>
             </div>
@@ -51,7 +56,8 @@ const Dashboard = props => {
 const mapStateToProps = state => {
     return {
         toggleSide: state.ui.toggleSidebar,
-        projects: state.tasks.projects
+        projects: state.tasks.projects,
+        gettingTasks: state.tasks.gettingTasks
     }
 }
 
